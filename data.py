@@ -129,7 +129,7 @@ def tokenize_text(text, vocab, to_tensor=True):
     caption.extend([vocab(token) for token in tokens])
     caption.append(vocab('<end>'))
     if to_tensor:
-        caption = torch.tensor(caption)
+        caption = torch.Tensor(caption)
     
     return caption
 

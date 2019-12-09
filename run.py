@@ -22,7 +22,7 @@ classes = [
 ]
 
 
-data_path = './agnews/'
+data_path = './data/'
 batch_size = 32
 device_name = 'cuda'
 nb_epochs = 3

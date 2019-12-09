@@ -93,6 +93,6 @@ def check_input(model, device):
     dummy_data = torch.ones(5, 30).long().to(device)
     lens = [28]*5
     dummy_pred = model(dummy_data, lens)
-    assert dummy_pred.shape == (5, 4), '\nOutput expected: (batch_size, 4) \nOutput found   : {}'.format(dummy_pred.shape)
+    assert dummy_pred.shape == (5, 5), '\nOutput expected: (batch_size, 5) \nOutput found   : {}'.format(dummy_pred.shape)
     print('Passed')
     return dummy_pred
