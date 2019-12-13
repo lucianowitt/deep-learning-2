@@ -67,7 +67,7 @@ Porém o resultado foi uma acurácia máxima no treinamento em torno de 35%, ref
 *Clique no número da versão abaixo para abrir o respectivo jupyter notebook.*
 
 | Versão | Épocas | LR Inicial | LR Step | RNN | Camadas RNN | Dropout | Camadas FC | Máxima acurácia no treino |
-|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
 | [1](sentiment-analysis_v01.ipynb) | 10 | 1e-2 | 3 | LSTM | 1 | 0 | 1 | 65.65% |
 | [2](sentiment-analysis_v02.ipynb) | 10 | 1e-2 | 3 | LSTM | 1 | **0.2** | 1 | 65.41% |
 | [3](sentiment-analysis_v03.ipynb) | 12 | 1e-2 | 3 | LSTM | **3** | 0.2 | 1 | 65.59% |
