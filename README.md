@@ -6,8 +6,7 @@ Gibson Weinert, Luciano Gonçalves, João Paulo Medeiros
 
 ### Dataset
 
-Para este trabalho foi escolhido o dataset [Kaggle - Sentiment Analysis on Movie Reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data),
-o qual consiste em reviews de filmes do site Rotten Tomatoes, classificadas de acordo com o sentimento do autor do review, indo de negativo a positivo, passando por neutro, numa escala de zero a quatro.
+Para este trabalho foi escolhido o dataset [Kaggle - Sentiment Analysis on Movie Reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data), o qual consiste em reviews de filmes do site Rotten Tomatoes, classificadas de acordo com o sentimento do autor do review, indo de negativo a positivo, passando por neutro, numa escala de zero a quatro.
 
 **Classes**
 
@@ -19,9 +18,7 @@ o qual consiste em reviews de filmes do site Rotten Tomatoes, classificadas de a
 
 ### Análise dos dados
 
-O dataset original está dividido nos conjuntos de treino e de teste. Porém ele foi concebido para um desafio, então o conjunto de teste não
-possui labels. Como o objetivo deste trabalho não é participar de tal desafio, o conjunto de teste foi descartado, e o conjunto de treino original
-foi dividido nos conjuntos de treino, validação e teste, sendo 20% do total para teste, e 20% do restante para validação.
+O dataset original está dividido nos conjuntos de treino e de teste. Porém ele foi concebido para um desafio, então o conjunto de teste não possui labels. Como o objetivo deste trabalho não é participar de tal desafio, o conjunto de teste foi descartado, e o conjunto de treino original foi dividido nos conjuntos de treino, validação e teste, sendo 20% do total para teste, e 20% do restante para validação.
 
 | Conjunto | Registros |
 |---|--:|
@@ -31,12 +28,9 @@ foi dividido nos conjuntos de treino, validação e teste, sendo 20% do total pa
 | *Total* | *156060* |
 
 Cada registro do dataset original possui quatro colunas: um identificador de frase, um identificador de sentença, a frase (texto) e a label do sentimento.
-Isso porque cada sentença da review foi dividida em "frases", de forma que uma frase isolada pode ser neutra, por exemplo, enquanto a sentença completa é
-negativa, pois outra frase da mesma sentença possui o fator que define o sentimento. Desta forma supostamente seria possível que os algoritmos que
-participassem do desafio aprendessem a diferenciar as partes das sentenças que definem os sentimentos.
+Isso porque cada sentença da review foi dividida em "frases", de forma que uma frase isolada pode ser neutra, por exemplo, enquanto a sentença completa é negativa, pois outra frase da mesma sentença possui o fator que define o sentimento. Desta forma supostamente seria possível que os algoritmos que participassem do desafio aprendessem a diferenciar as partes das sentenças que definem os sentimentos.
 
-Para nosso trabalho descartamos os identificadores de sentença e frase e utilizamos apenas os textos (coluna "Phrase") e labels (coluna "Sentiment") dos registros,
-renomeadas para "X" e "y", respectivamente.
+Para nosso trabalho descartamos os identificadores de sentença e frase e utilizamos apenas os textos (coluna "Phrase") e labels (coluna "Sentiment") dos registros, renomeadas para "X" e "y", respectivamente.
 
 Notou-se na [análise dos dados](dataset-analysis.ipynb) que os mesmos não estão seguindo uma distribuição uniforme com relação à classes, mas sim uma distribuição semelhante à normal.
 
@@ -58,7 +52,7 @@ A função de custo utilizada foi a entropia cruzada (**CrossEntropyLoss**), e o
 
 Foram realizados diversos experimentos, onde alguns foram selecionados e estão listados na tabela abaixo. Lembrando que, por limitações de tempo e recursos computacionais, não foi possível explorar mais opções nesta tarefa de classificação, nem mesmo outros modelos alternativos além dos apresentados.
 
-Nos experimentos de 1 a 5 notou-se sempre um rápido overfitting no conjunto de treino, resultando numa acurácia máxima em torno de 65% na avaliação. A redução da taxa de aprendizado e aumento no número de épocas não surtiu efeito neste comportamento, nem mesmo a adição de dropout, aumento das camadas da RNN, aumento das cadamas FC ou a redução do tamanho do batch.
+Nos experimentos de 1 a 5 notou-se sempre um rápido overfitting no conjunto de treino, resultando numa acurácia máxima em torno de 65% na validação. A redução da taxa de aprendizado e aumento no número de épocas não surtiu efeito neste comportamento, nem mesmo a adição de dropout, aumento das camadas da RNN, aumento das cadamas FC ou a redução do tamanho do batch.
 O que se nota é que o classificador aprendeu a distribuição das classes, semelhante à normal, e tem grandes dificuldades em classificar corretamente as classes menos frequentes do dataset. 
 
 Para experimento 6 removemos do dataset as multiplas frases de cada sentença, deixando somente as sentenças completas. Desta forma [a distribuição](dataset-analysis_resumo.ipynb) das classes ficou menos parecida com a normal, e mais próxima da uniforma, embora ainda longe da uniforme propriamente dita. Também aumentamos o número de épocas e reduzimos a taxa de aprendizado inicial.
@@ -79,7 +73,7 @@ Porém o resultado foi uma acurácia máxima no treinamento em torno de 35%, ref
 
 Como as medidas de acurácia não variaram muito de uma versão para a outra, para o teste foi escolhida a versão 4, por possuir mais layers tanto no LSTM quanto na FC, o que em teoria tornaria ela mais robusta do que as anteriores por trazer maior poder de abstração e poder de classificação não linear, respectivamente.
 
-Como era de se esperar, o resultado no teste foi apenas um pouco pior que a valização, com acurácia de 65,09% e matriz de confusão semelhante.
+Como era de se esperar, o resultado no teste foi apenas um pouco pior que a validação, com acurácia de 65,09% e matriz de confusão semelhante.
 
 ### Conclusão
 
