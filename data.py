@@ -160,22 +160,22 @@ def get_loaders(
         data_path,
         batch_size,
         workers=2, 
-        splits=['train', 'val', 'test'], 
+        splits=['train', 'valid', 'test'], 
     ):
 
     loaders = []
     for split in splits:
         csv_dataset = CSVDataset(
             data_path=data_path,
-            data_split=split,
+            data_split=split
         )
 
         loader = DataLoader(
             dataset=csv_dataset,
             batch_size=batch_size,
-            shuffle=(split == 'train'),            
+            shuffle=(split == 'train'),
             collate_fn=collate_fn,
-            num_workers=workers,
+            num_workers=workers
         )
         loaders.append(loader)
 

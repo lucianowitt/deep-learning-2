@@ -4,6 +4,9 @@ from torch import optim
 import torchvision
 from matplotlib import pyplot as plt
 import numpy as np
+import pandas as pd
+import seaborn as sns
+from sklearn.metrics import confusion_matrix
 
 
 def train_epoch(
@@ -28,18 +31,22 @@ def train_epoch(
         if batch_idx % log_interval == 0:
             print('Train Epoch: {:3d} [{:6d}/{:6d} ({:.0f}%)]\tLoss: {:.6f}'.format(
                 epoch, batch_idx * len(data), len(train_loader.dataset),
-                100. * batch_idx / len(train_loader), loss.item()))            
+                100. * batch_idx / len(train_loader), loss.item()))
+        
     return losses
 
 @torch.no_grad()
 def test(
         model, 
         device,         
-        test_loader
+        test_loader,
+        classes
     ):
     model.eval()
-    test_loss = 0
+    test_loss = 0.
     correct = 0
+    all_targets = []
+    all_preds = []
     criterion = nn.CrossEntropyLoss().to(device)    
     for data, target, lengths in test_loader:
         data, target = data.to(device), target.to(device)
@@ -47,12 +54,25 @@ def test(
         test_loss += criterion(output, target).item() # sum up batch loss
         pred = output.max(1, keepdim=True)[1] # get the index of the max log-probability
         correct += pred.eq(target.view_as(pred)).sum().item()
-
+        
+        all_targets.extend(target.cpu().tolist())
+        all_preds.extend(pred.cpu().tolist())
+    
     test_loss /= len(test_loader.dataset)
     accuracy = 100. * correct / len(test_loader.dataset)
     print('Test set: Average loss: {:.4f}, Accuracy: {}/{} ({:.2f}%)\n'.format(
-        test_loss, correct, len(test_loader.dataset),
-        accuracy))
+        test_loss, correct, len(test_loader.dataset), accuracy))
+    
+    data = confusion_matrix(all_targets, all_preds)
+    cm = pd.DataFrame(data, columns=classes, index=classes)
+    plt.figure()
+    sns.heatmap(cm, cmap='coolwarm', annot=True, fmt='g', cbar=False)
+    plt.ylabel('True value')
+    plt.yticks(rotation=45)
+    plt.xlabel('Prediction')
+    plt.xticks(rotation=45)
+    plt.show()
+    
     return accuracy
 
 
@@ -60,6 +80,7 @@ def train(
         model,
         train_loader,
         test_loader,
+        classes,
         device,
         optimizer,
         nb_epochs=3,
@@ -82,10 +103,10 @@ def train(
         if lr_scheduler:
             lr_scheduler.step()
         print('\n* * * Evaluating * * *')
-        acc = test(model, device, test_loader)                
+        acc = test(model, device, test_loader, classes)
         history['val_acc'].append(acc)
         history['train_loss'].extend(train_loss)
-
+    
     return history
 
 
