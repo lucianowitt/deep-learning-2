@@ -61,7 +61,7 @@ Foram realizados diversos experimentos, onde alguns foram selecionados e estão 
 Nos experimentos de 1 a 5 notou-se sempre um rápido overfitting no conjunto de treino, resultando numa acurácia máxima em torno de 65% na avaliação. A redução da taxa de aprendizado e aumento no número de épocas não surtiu efeito neste comportamento, nem mesmo a adição de dropout, aumento das camadas da RNN, aumento das cadamas FC ou a redução do tamanho do batch.
 O que se nota é que o classificador aprendeu a distribuição das classes, semelhante à normal, e tem grandes dificuldades em classificar corretamente as classes menos frequentes do dataset. 
 
-Para experimento 6 removemos do dataset as multiplas frases de cada sentença, deixando somente as sentenças completas. Desta forma a distribuição das classes ficou menos parecida com a normal, e mais próxima da uniforma, embora ainda longe da uniforme propriamente dita. Também aumentamos o número de épocas e reduzimos a taxa de aprendizado inicial.
+Para experimento 6 removemos do dataset as multiplas frases de cada sentença, deixando somente as sentenças completas. Desta forma [a distribuição](dataset-analysis_resumo.ipynb) das classes ficou menos parecida com a normal, e mais próxima da uniforma, embora ainda longe da uniforme propriamente dita. Também aumentamos o número de épocas e reduzimos a taxa de aprendizado inicial.
 Porém o resultado foi uma acurácia máxima no treinamento em torno de 35%, reflexo da nova distribuição das classes, num comportamento semelhante ao do dataset original.
 
 *Clique no número da versão abaixo para abrir o respectivo jupyter notebook.*
